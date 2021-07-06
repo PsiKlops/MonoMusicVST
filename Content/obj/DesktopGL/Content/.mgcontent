@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/AndroidButGridFont.spritefont</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/DownArrow.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/File.spritefont</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/grid.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/icon.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/instruButton.spritefont</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/LeftArrow.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/massiveFont.spritefont</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/piano.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/PlainWhite.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/play.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/RightArrow.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/rwnd.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/SaveName.spritefont</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/smallGridFont.spritefont</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/splash.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/stop.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/UpArrow.png</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/WhiteCircleSelect.tga</File>
+    <File>C:/Users/PsiKl/source/repos/MusicMakerForNet5.0/Content/WhiteFilledCircle.tga</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File>MusicFont.spritefont</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

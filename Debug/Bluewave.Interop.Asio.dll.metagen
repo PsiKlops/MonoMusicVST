@@ -1,0 +1,80 @@
+ImageRuntimeVersion: v4.0.30319
+Assembly Bluewave.Interop.Asio, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Class BlueWave.Interop.Asio.BufferSize: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Properties:
+    Int32 Granularity 'get ' : 
+    Int32 PreferredSize 'get ' : 
+    Int32 MaxSize 'get ' : 
+    Int32 MinSize 'get ' : 
+  Methods:
+    get_MinSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_MaxSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_PreferredSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_Granularity(): PrivateScope, Public, HideBySig, SpecialName
+Class BlueWave.Interop.Asio.Channel: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Properties:
+    Single Item [Int32] 'get set' : 
+    Double SampleType 'get ' : 
+    Int32 BufferSize 'get ' : 
+    System.String Name 'get ' : 
+  Methods:
+    get_Name(): PrivateScope, Public, HideBySig, SpecialName
+    get_BufferSize(): PrivateScope, Public, HideBySig, SpecialName
+    get_SampleType(): PrivateScope, Public, HideBySig, SpecialName
+    set_Item(Int32, Single): PrivateScope, Public, HideBySig, SpecialName
+    get_Item(Int32): PrivateScope, Public, HideBySig, SpecialName
+Class BlueWave.Interop.Asio.InstalledDriver: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  Properties:
+    System.String Name 'get ' : 
+  Methods:
+    ToString(): PrivateScope, Public, Virtual, HideBySig
+    get_Name(): PrivateScope, Public, HideBySig, SpecialName
+Class BlueWave.Interop.Asio.AsioDriver: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Properties:
+    BlueWave.Interop.Asio.Channel[] OutputChannels 'get ' : 
+    BlueWave.Interop.Asio.Channel[] InputChannels 'get ' : 
+    Double SampleRate 'get ' : 
+    BlueWave.Interop.Asio.BufferSize BufferSizex 'get ' : 
+    Int32 NumberOutputChannels 'get ' : 
+    Int32 NumberInputChannels 'get ' : 
+    System.String ErrorMessage 'get ' : 
+    System.String DriverName 'get ' : 
+    Int32 Version 'get ' : 
+    BlueWave.Interop.Asio.InstalledDriver[] InstalledDrivers 'get ' : 
+  Events:
+    System.EventHandler BufferUpdate: SpecialName
+  Methods:
+    get_InstalledDrivers(): PrivateScope, Public, Static, HideBySig, SpecialName
+    SelectDriver(InstalledDriver): PrivateScope, Public, Static, HideBySig
+    get_Version(): PrivateScope, Public, HideBySig, SpecialName
+    get_DriverName(): PrivateScope, Public, HideBySig, SpecialName
+    get_ErrorMessage(): PrivateScope, Public, HideBySig, SpecialName
+    get_NumberInputChannels(): PrivateScope, Public, HideBySig, SpecialName
+    get_NumberOutputChannels(): PrivateScope, Public, HideBySig, SpecialName
+    get_BufferSizex(): PrivateScope, Public, HideBySig, SpecialName
+    get_SampleRate(): PrivateScope, Public, HideBySig, SpecialName
+    get_InputChannels(): PrivateScope, Public, HideBySig, SpecialName
+    get_OutputChannels(): PrivateScope, Public, HideBySig, SpecialName
+    Start(): PrivateScope, Public, HideBySig
+    Stop(): PrivateScope, Public, HideBySig
+    ShowControlPanel(): PrivateScope, Public, HideBySig
+    CreateBuffers(Int32): PrivateScope, Public, HideBySig
+    DisposeBuffers(): PrivateScope, Public, HideBySig
+    Release(): PrivateScope, Public, HideBySig
+    SetSampleRate(Double): PrivateScope, Public, HideBySig
+    add_BufferUpdate(EventHandler): PrivateScope, Public, HideBySig, SpecialName
+    remove_BufferUpdate(EventHandler): PrivateScope, Public, HideBySig, SpecialName

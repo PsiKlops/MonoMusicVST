@@ -1,0 +1,113 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\MusicMakerForNet5.0.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\BlueWave.Interop.Asio\\Bluewave.Interop.Asio.vcxproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\BlueWave.Interop.Asio\\Bluewave.Interop.Asio.vcxproj",
+        "projectName": "Bluewave.Interop.Asio",
+        "projectPath": "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\BlueWave.Interop.Asio\\Bluewave.Interop.Asio.vcxproj"
+      },
+      "frameworks": {
+        "native": {}
+      }
+    },
+    "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\MusicMakerForNet5.0.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\MusicMakerForNet5.0.csproj",
+        "projectName": "MusicMakerForNet5.0",
+        "projectPath": "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\MusicMakerForNet5.0.csproj",
+        "packagesPath": "C:\\Users\\PsiKl\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\PsiKl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0-windows7.0": {
+            "targetAlias": "net5.0-windows7.0",
+            "projectReferences": {
+              "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\BlueWave.Interop.Asio\\Bluewave.Interop.Asio.vcxproj": {
+                "projectPath": "C:\\Users\\PsiKl\\source\\repos\\MusicMakerForNet5.0\\BlueWave.Interop.Asio\\Bluewave.Interop.Asio.vcxproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0-windows7.0": {
+          "targetAlias": "net5.0-windows7.0",
+          "dependencies": {
+            "MonoGame.Content.Builder.Task": {
+              "target": "Package",
+              "version": "[3.8.0.1641, )"
+            },
+            "MonoGame.Framework.DesktopGL": {
+              "target": "Package",
+              "version": "[3.8.0.1641, )"
+            },
+            "NAudio": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "NAudio.Asio": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "VST.NET2-Host": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
+            "managed-midi": {
+              "target": "Package",
+              "version": "[1.9.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
