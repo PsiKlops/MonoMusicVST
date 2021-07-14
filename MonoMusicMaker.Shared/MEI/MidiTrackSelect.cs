@@ -136,7 +136,7 @@ namespace MonoMusicMaker //.Shared.MEI
             mActiveGrid.SetOnAndClearAllOthers(button);
             System.Diagnostics.Debug.WriteLine(string.Format("Midi Track SetMidiTrack{0}", button.mGED.mValue));
 
-            state.GetMidiBase().StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
+            state.StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
           
             if (state.mCurrentTrackPlayArea != button.mGED.mValue)
             {

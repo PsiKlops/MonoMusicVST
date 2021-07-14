@@ -654,7 +654,7 @@ namespace MonoMusicMaker
             foreach (NoteLine nlp in mPreviewLines)
             {
                 System.Diagnostics.Debug.WriteLine(string.Format(" MUSIC PREVIEWER AllNotesOff mPrevLines nl.NoteNum {0}", nlp.NoteNum));
-                mPreviewState.GetMidiBase().NoteOff(nlp.GetChannel(), nlp.NoteNum);
+                mPreviewState.NoteOff(nlp.GetChannel(), nlp.NoteNum);
             }
         }
 

@@ -1,0 +1,6 @@
+C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\Release\net5.0-windows7.0\MusicMakerForNet5.csproj.AssemblyReference.cache
+C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\Release\net5.0-windows7.0\PluginHost.EditorFrame.resources
+C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\Release\net5.0-windows7.0\PluginHost.MainForm.resources
+C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\Release\net5.0-windows7.0\PluginHost.PluginForm.resources
+C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\Release\net5.0-windows7.0\MusicMakerForNet5.Properties.Resources.resources
+C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\Release\net5.0-windows7.0\MusicMakerForNet5.csproj.GenerateResource.cache

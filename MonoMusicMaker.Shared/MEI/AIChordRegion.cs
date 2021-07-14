@@ -1604,7 +1604,7 @@ namespace MonoMusicMaker
                 {
                     //Set active
                     Active = true;
-                    //state.GetMidiBase().NoteOn(Chan, mNoteNum, 70);
+                    //state.NoteOn(Chan, mNoteNum, 70);
                 }
              }
             else
@@ -1613,7 +1613,7 @@ namespace MonoMusicMaker
                 {
                     //Set inactive
                     Active = false;
-                    //state.GetMidiBase().NoteOff(Chan, mNoteNum);
+                    //state.NoteOff(Chan, mNoteNum);
                 }
             }
 

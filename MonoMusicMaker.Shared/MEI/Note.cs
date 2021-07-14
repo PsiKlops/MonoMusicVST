@@ -222,7 +222,7 @@ namespace MonoMusicMaker //.MEI
                 {
                     //Set note on
                     mNoteOn = true;
-                    state.GetMidiBase().NoteOn(Chan, mNoteNum, Velocity);
+                    state.NoteOn(Chan, mNoteNum, Velocity);
                     //mParent.StartNote(this, state);
                     return true;
                 }
@@ -235,7 +235,7 @@ namespace MonoMusicMaker //.MEI
                     mNoteOn = false;
                     if(bAllowTurnOffPlaying)
                     {
-                        state.GetMidiBase().NoteOff(Chan, mNoteNum);
+                        state.NoteOff(Chan, mNoteNum);
                         //mParent.EndNote(this, state);
                     }
                 }
@@ -246,7 +246,7 @@ namespace MonoMusicMaker //.MEI
 
         public void SetNoteOff(MelodyEditorInterface.MEIState state)
         {
-            state.GetMidiBase().NoteOff(Chan, mNoteNum);
+            state.NoteOff(Chan, mNoteNum);
         }
 
         public bool IsNoteInRange(float start, float end) //TODO IsNoteInRange only excepts notes under loop bar range so wont accept ones starting/ending at the exact start/end

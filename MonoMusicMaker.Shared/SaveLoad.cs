@@ -535,7 +535,7 @@ namespace MonoMusicMaker
             GetCurrentSongData(state);
             state.mMeledInterf.ClearAll();
             LoadSaveFileName = "";
-            state.GetMidiBase().StopAllNotes(); //Blatt out a clear to stop notes being stuck on 
+            state.StopAllNotes(); //Blatt out a clear to stop notes being stuck on 
             state.PlayAreaChanged(true, false, false);
             return true;
         }

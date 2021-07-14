@@ -637,7 +637,7 @@ namespace MonoMusicMaker
             {
                 if (n.Playing())
                 {
-                    state.GetMidiBase().NoteOff(pa.mChannel, n.mNoteNum);
+                    state.NoteOff(pa.mChannel, n.mNoteNum);
                 }
                 n.RemoveFromParentLine();
             }
@@ -717,7 +717,7 @@ namespace MonoMusicMaker
                 {
                     if (n.Playing())
                     {
-                        state.GetMidiBase().NoteOff(pa.mChannel, n.mNoteNum);
+                        state.NoteOff(pa.mChannel, n.mNoteNum);
                     }
                     n.RemoveFromParentLine();
                     mSelectedNotes.Remove(n);
@@ -774,7 +774,7 @@ namespace MonoMusicMaker
 
                 if (n.Playing())
                 {
-                    state.GetMidiBase().NoteOff(pa.mChannel, n.mNoteNum);
+                    state.NoteOff(pa.mChannel, n.mNoteNum);
                 }
 
                 n.RemoveFromParentLine();

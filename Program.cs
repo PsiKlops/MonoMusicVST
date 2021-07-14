@@ -9,19 +9,25 @@ namespace MonoMusicMaker
     /// </summary>
     public static class Program
     {
+        static bool mMainForm = false;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            //using (var game = new MainMusicGame())
-            //    game.Run();
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PluginHost.MainForm());
-
+            if (mMainForm)
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new PluginHost.MainForm(null));
+            }
+            else
+            {
+                using (var game = new MainMusicGame())
+                    game.Run();
+            }
         }
     }
 //#endif

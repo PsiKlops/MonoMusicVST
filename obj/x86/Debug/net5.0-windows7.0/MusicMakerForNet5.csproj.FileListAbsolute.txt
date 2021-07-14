@@ -60,7 +60,6 @@ C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\bin\x86\Debug\net5.0-windows7.0\
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\bin\x86\Debug\net5.0-windows7.0\Jacobi.Vst.Host.Interop.dll
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\bin\x86\Debug\net5.0-windows7.0\Jacobi.Vst.Core.xml
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\bin\x86\Debug\net5.0-windows7.0\Jacobi.Vst.Host.Interop.xml
-C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\MusicMakerForNet5.csproj.AssemblyReference.cache
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\PluginHost.EditorFrame.resources
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\PluginHost.MainForm.resources
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\PluginHost.PluginForm.resources
@@ -75,3 +74,4 @@ C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\ref\MusicMakerForNet5.dll
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\MusicMakerForNet5.pdb
 C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\MusicMakerForNet5.genruntimeconfig.cache
+C:\Users\PsiKl\source\repos\MusicMakerForNet5.0\obj\x86\Debug\net5.0-windows7.0\MusicMakerForNet5.csproj.AssemblyReference.cache

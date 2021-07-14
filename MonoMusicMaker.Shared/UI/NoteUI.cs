@@ -168,7 +168,7 @@ namespace MonoMusicMaker
         {
             if (mPreviewNote != -1 && mState !=null)
             {
-                mState.GetMidiBase().NoteOff(mPreviewChannel, mPreviewNote);
+                mState.NoteOff(mPreviewChannel, mPreviewNote);
                 mPreviewNote = -1;
                 mPreviewChannel = -1;
             }

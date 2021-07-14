@@ -590,7 +590,7 @@ namespace MonoMusicMaker //.MEI
             {
                 if(n.Playing())
                 {
-                    state.GetMidiBase().NoteOn(mParent.mChannel, NoteNum, n.Velocity);
+                    state.NoteOn(mParent.mChannel, NoteNum, n.Velocity);
                     return;
                 }
             }
@@ -599,7 +599,7 @@ namespace MonoMusicMaker //.MEI
         public void StartNote(Note noteOn, MelodyEditorInterface.MEIState state)
         {
             mNotesPlaying.Add(noteOn);
-            state.GetMidiBase().NoteOn(mParent.mChannel, NoteNum, noteOn.Velocity);
+            state.NoteOn(mParent.mChannel, NoteNum, noteOn.Velocity);
         }
 
         public void EndNote(Note noteOff, MelodyEditorInterface.MEIState state)
@@ -608,7 +608,7 @@ namespace MonoMusicMaker //.MEI
 
             if (mNotesPlaying.Count == 0)
             {
-                state.GetMidiBase().NoteOff(mParent.mChannel, NoteNum);
+                state.NoteOff(mParent.mChannel, NoteNum);
             }
         }
 

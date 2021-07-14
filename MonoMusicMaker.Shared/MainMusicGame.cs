@@ -88,7 +88,7 @@ namespace MonoMusicMaker
 
         public void AlternateSaveCB(Button button, MelodyEditorInterface.MEIState state)
         {
-            state.GetMidiBase().StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
+            state.StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
 
             if (state.mMeledInterf.mSaveSwitchManager.GetSelected() != button.mGED.mValue)
             {
@@ -107,7 +107,7 @@ namespace MonoMusicMaker
 
         public void RiffSelectParamBarCB(Button button, MelodyEditorInterface.MEIState state)
         {
-            state.GetMidiBase().StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
+            state.StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
 
             if (state.mMeledInterf.mPresetManager.SetSelected(button.mGED.mValue))
             {
@@ -119,7 +119,7 @@ namespace MonoMusicMaker
 
         public void DrumPresetSelectParamBarCB(Button button, MelodyEditorInterface.MEIState state)
         {
-            state.GetMidiBase().StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
+            state.StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
 
             if(state.mMeledInterf.mDrumPresetManager.SetSelected(button.mGED.mValue))
             {
@@ -138,7 +138,7 @@ namespace MonoMusicMaker
         {
             if (state.mCurrentTrackPlayArea != button.mGED.mValue)
             {
-                state.GetMidiBase().StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
+                state.StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
 
                 state.mSoloCurrent = false; //always turn off when we move away a track to another one
                 state.mCurrentTrackPlayArea = button.mGED.mValue;
@@ -376,7 +376,7 @@ namespace MonoMusicMaker
             IsFixedTimeStep = true;
 
             //VST
-            mMainForm = new PluginHost.MainForm();
+            mMainForm = new PluginHost.MainForm(mMelEdInterf);
             //mMainForm.Init();
             mMainForm.Show();
 
@@ -1006,7 +1006,7 @@ namespace MonoMusicMaker
 
                     if (mMelEdInterf.mState.mSoloCurrent)
                     {
-                        mMelEdInterf.mState.GetMidiBase().StopAllNotes(mMelEdInterf.mState.mCurrentTrackPlayArea + 1); //plaus 1 because this is midi channel number to except from stopping
+                        mMelEdInterf.mState.StopAllNotes(mMelEdInterf.mState.mCurrentTrackPlayArea + 1); //plaus 1 because this is midi channel number to except from stopping
                     }
                 }
             }
@@ -1048,7 +1048,7 @@ namespace MonoMusicMaker
 
                         if (!mStartStop.mbOn)
                         {
-                            mMelEdInterf.mState.GetMidiBase().StopAllNotes(); //TODO - bit high level UI for this!
+                            mMelEdInterf.mState.StopAllNotes(); //TODO - bit high level UI for this!
                         }
                     }
                 }
@@ -1253,7 +1253,7 @@ namespace MonoMusicMaker
 
                     if(!mStartStop.mbOn)
                     {
-                        mMelEdInterf.mState.GetMidiBase().StopAllNotes(); //TODO - bit high level UI for this!
+                        mMelEdInterf.mState.StopAllNotes(); //TODO - bit high level UI for this!
                     }
                 }
             }
@@ -1263,7 +1263,7 @@ namespace MonoMusicMaker
                 {
                     mMelEdInterf.Rewind();
                     mRewind.mbOn = false; //Keep it off since button is once only
-                    // TODO might need mMelEdInterf.mState.GetMidiBase().StopAllNotes(); //TODO - bit high level UI for this!
+                    // TODO might need mMelEdInterf.mState.StopAllNotes(); //TODO - bit high level UI for this!
                 }
             }
 
@@ -1275,7 +1275,7 @@ namespace MonoMusicMaker
 #if WINDOWS
                     if (mSave.mbOn)
                     {
-                        mMelEdInterf.mState.GetMidiBase().StopAllNotes(); //Blatt out a clear to stop notes being stuck on 
+                        mMelEdInterf.mState.StopAllNotes(); //Blatt out a clear to stop notes being stuck on 
                         mMelEdInterf.GetSaveLoad().SaveDialogFile(mMelEdInterf.mState);
                     }
 #else
@@ -1291,7 +1291,7 @@ namespace MonoMusicMaker
                     {
                         bLoadTurnedOn = true;
 #if WINDOWS
-                         mMelEdInterf.mState.GetMidiBase().StopAllNotes(); //Blatt out a clear to stop notes being stuck on 
+                         mMelEdInterf.mState.StopAllNotes(); //Blatt out a clear to stop notes being stuck on 
                          mMelEdInterf.GetSaveLoad().LoadDialogFile(mMelEdInterf.mState);
 #else
                         mMelEdInterf.GetSaveLoad().SetActive(mMelEdInterf.mState);

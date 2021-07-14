@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Media;
 using NAudio.Midi;
 using Jacobi.Vst.Core;
 using Jacobi.Vst.Interop;
+using System.Threading;
 
 namespace MonoMusicMaker //.MEI
 {
@@ -35,6 +36,7 @@ namespace MonoMusicMaker //.MEI
         public DrumPresetManager mDrumPresetManager = new DrumPresetManager();
         public SaveSwitchingManager mSaveSwitchManager = new SaveSwitchingManager();
         public EditManager mEditManager = null; // will be set from MainMusicManager init
+        public PluginAudioManager mPluginManager = new PluginAudioManager();
 
         public const float QUANT_NONE           = 0f;
         public const float QUANT_EIGHTH_NOTE    = 1.0f / 8;
@@ -141,10 +143,12 @@ namespace MonoMusicMaker //.MEI
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////// 
+        ///////////////////////////////////////////////////////////////////////////////////////// 
         /// START MESTATE
         /// 
         public class MEIState
         {
+            bool mbUsePlugin = true;
             public int mPitchBend = 0;
             public int mControllerBend = 0;
 
@@ -304,10 +308,65 @@ namespace MonoMusicMaker //.MEI
                 return false;
             }
 
+
+            //MIDI INTERFACE IS HERE NOW!!!!
             public MidiBase GetMidiBase() { return mStateMidiMgr.GetMidiBase(); }
+            public void NoteOn(int channel, int NoteNum, int velocity)
+            {
+                if(mbUsePlugin)
+                {
+                    mMeledInterf.mPluginManager.NoteOn(channel, NoteNum, velocity);
+                }
+                else
+                {
+                    GetMidiBase().NoteOn(channel, NoteNum, velocity);
+                }
+            }
+            public void NoteOff(int channel, int NoteNum)
+            {
+                if (mbUsePlugin)
+                {
+                    mMeledInterf.mPluginManager.NoteOff(channel, NoteNum);
+                }
+                else
+                {
+                    GetMidiBase().NoteOff(channel, NoteNum);
+                }
+            }
+            public void StopAllNotes(int exceptChannel = -1)
+            {
+                if (mbUsePlugin)
+                {
+                    mMeledInterf.mPluginManager.StopAllNotes(exceptChannel);
+                }
+                else
+                {
+                    GetMidiBase().StopAllNotes(exceptChannel);
+                }
+            }
+            public void ClearAllNotes(int channel)
+            {
+                if (mbUsePlugin)
+                {
+                    mMeledInterf.mPluginManager.ClearAllNotes(channel);
+                }
+                else
+                {
+                    GetMidiBase().ClearAllNotes(channel);
+                }
+            }
+            public void HideKeyboard()
+            {
+                GetMidiBase().HideKeyboard();
+            }
+            public void ShowKeyboard()
+            {
+                GetMidiBase().ShowKeyboard();
+            }
         }
         /// 
         /// END MESTATE
+        /////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////
 
         public void EnableParamLine(bool bEnable)
@@ -601,7 +660,7 @@ namespace MonoMusicMaker //.MEI
 
             if (!mState.Playing)
             {
-                mState.GetMidiBase().ClearAllNotes(1); //TODO Not sure why I cleared just track 1 here?
+                mState.ClearAllNotes(1); //TODO Not sure why I cleared just track 1 here?
             }
         }
 
@@ -610,11 +669,11 @@ namespace MonoMusicMaker //.MEI
             //mSaveLoad.GatherMidiSave(this);
             if(bOn)
             {
-                mState.GetMidiBase().ShowKeyboard();
+                mState.ShowKeyboard();
             }
             else
             {
-                mState.GetMidiBase().HideKeyboard();
+                mState.HideKeyboard();
             }
         }
 
@@ -854,7 +913,7 @@ namespace MonoMusicMaker //.MEI
             mCurrentPlayArea.RefreshLinesToOffset();
             mState.mSquareCursor.BlankTexture(); //Blank out areas that my no be covered by fewer lines showing
             mState.PlayAreaChanged(true);
-            mState.GetMidiBase().StopAllNotes();
+            mState.StopAllNotes();
         }
 
         public void SetKeyNotesOnlyMode(bool bOn, int key)
@@ -884,7 +943,7 @@ namespace MonoMusicMaker //.MEI
 
             mState.mSquareCursor.BlankTexture(); //Blank out areas that my no be covered by fewer lines showing
             mState.PlayAreaChanged(true, false, false);
-            mState.GetMidiBase().StopAllNotes();
+            mState.StopAllNotes();
         }
 
         public List<NoteLine> GetRenderedNoteLines()
@@ -1058,6 +1117,9 @@ namespace MonoMusicMaker //.MEI
             TimeSpan timeSpan = gameTime.ElapsedGameTime;
 
             MelodyEditorInterface.UIButtonMask startMask = mState.mCurrentButtonUpdate;
+
+            mPluginManager.ProcessAllPluginMidi();
+            //Thread.Sleep(2);
 
             mState.mCurrentGameTimeMs = (int)gameTime.TotalGameTime.TotalMilliseconds;
             if (mState.Playing)

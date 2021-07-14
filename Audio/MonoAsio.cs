@@ -60,8 +60,9 @@ namespace MonoMusicMaker
         {
             int BytesPerWaveSample = 4;
             public WaveFormat WaveFormat => WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);
-            public VstPluginContext VstContext { get;  set; }
-  
+            public VstPluginContext VstContext { get; set; }
+            public PluginAudioManager PIAM { get; set; }
+
             int weirdShit = 0;
 
             public int Read(byte[] outputBuffer, int offset, int count)
@@ -73,55 +74,87 @@ namespace MonoMusicMaker
                 //    return 0;
                 //}
                 //weirdShit = 0;
+                // lock (PIAM.mLock)
 
-                if (VstContext != null && VstContext.PluginCommandStub!=null)
+                int numPlugins = PIAM.GetNumPluginContext();
+                int expectedNumAsioBuffers = 2;
+
+                VstAudioBufferManager asioOutBuffers = new VstAudioBufferManager(
+                   expectedNumAsioBuffers,
+                   count / (expectedNumAsioBuffers * BytesPerWaveSample)
+                );
+
+                for (int pindex=0; pindex < numPlugins; pindex++)
                 {
-                    VstAudioBufferManager outputBuffers = new VstAudioBufferManager(
-                       VstContext.PluginInfo.AudioOutputCount,
-                       count / (VstContext.PluginInfo.AudioOutputCount * BytesPerWaveSample)
-                    );
+                    int piIndex = 0;
+                    VstContext = (PIAM != null && PIAM.GetPluginContext(piIndex) != null) ? PIAM.GetPluginContext(pindex).PluginContext : null;
 
-                    VstAudioBufferManager inputBuffers = new VstAudioBufferManager(
-                         VstContext.PluginInfo.AudioInputCount,
-                         count / (Math.Max(1, VstContext.PluginInfo.AudioInputCount) * BytesPerWaveSample)
-                     );
-
-                    //VstContext.PluginCommandStub.Commands.StartProcess();
-                    //if (vstEvents.Length > 0)
-                    //    VstContext.PluginCommandStub.Commands.ProcessEvents(vstEvents);
-                    //VstContext.PluginCommandStub.Commands.ProcessReplacing(inputBuffers.ToArray(), outputBuffers.ToArray());
-                    //VstContext.PluginCommandStub.Commands.ProcessReplacing(inputBuffers.Buffers.ToArray(), outputBuffers.Buffers.ToArray());
-                    //VstContext.PluginCommandStub.Commands.StopProcess();
-                    //VstContext.PluginCommandStub.Commands.MainsChanged(true);
-                    VstContext.PluginCommandStub.Commands.StartProcess();
-                    VstContext.PluginCommandStub.Commands.ProcessReplacing(inputBuffers.Buffers.ToArray(), outputBuffers.Buffers.ToArray());
-                    VstContext.PluginCommandStub.Commands.StopProcess();
-                    //VstContext.PluginCommandStub.Commands.MainsChanged(false);
-
-
-                    //Convert from multi-track to interleaved data
-                    int bufferIndex = offset;
-                    for (int i = 0; i < outputBuffers.BufferSize; i++)
+                    if (VstContext != null && VstContext.PluginCommandStub != null)
                     {
-                        foreach (VstAudioBuffer vstBuffer in outputBuffers.Buffers)
+                        VSTPlugin vstp  = PIAM.GetPluginContext(0);
+
+                        vstp.InitBuffer(count, BytesPerWaveSample);
+
+                        //vstp.inputBuffers = new VstAudioBufferManager(
+                        //     VstContext.PluginInfo.AudioInputCount,
+                        //     count / (Math.Max(1, VstContext.PluginInfo.AudioInputCount) * BytesPerWaveSample)
+                        // );
+
+                        //VstContext.PluginCommandStub.Commands.StartProcess();
+                        //if (vstEvents.Length > 0)
+                        //    VstContext.PluginCommandStub.Commands.ProcessEvents(vstEvents);
+                        //VstContext.PluginCommandStub.Commands.ProcessReplacing(inputBuffers.ToArray(), outputBuffers.ToArray());
+                        //VstContext.PluginCommandStub.Commands.ProcessReplacing(inputBuffers.Buffers.ToArray(), outputBuffers.Buffers.ToArray());
+                        //VstContext.PluginCommandStub.Commands.StopProcess();
+                        VstContext.PluginCommandStub.Commands.MainsChanged(true);
+                        VstContext.PluginCommandStub.Commands.StartProcess();
+
+                        VstContext.PluginCommandStub.Commands.ProcessReplacing(vstp.inputBuffers.Buffers.ToArray(), vstp.outputBuffers.Buffers.ToArray());
+                        VstContext.PluginCommandStub.Commands.StopProcess();
+                        VstContext.PluginCommandStub.Commands.MainsChanged(false);
+
+                        //Convert from multi-track to interleaved data
+                        float volume = 0.5f;
+                        int lbufferIndex = offset;
+                        for (int i = 0; i < vstp.outputBuffers.BufferSize; i++)
                         {
-                            //Int16 waveValue = (Int16)((vstBuffer[i] + 1) * 128);
-                            byte[] bytes = BitConverter.GetBytes(vstBuffer[i]);
-                            outputBuffer[bufferIndex] = bytes[0];
-                            outputBuffer[bufferIndex + 1] = bytes[1];
-                            outputBuffer[bufferIndex + 2] = bytes[2];
-                            outputBuffer[bufferIndex + 3] = bytes[3];
-                            bufferIndex += 4;
+                            int countBuf = 0;
+                            foreach (VstAudioBuffer vstBuffer in vstp.outputBuffers.Buffers)
+                            {
+                                asioOutBuffers.Buffers.ToArray()[countBuf][i] += vstBuffer[i] * volume;
+                                countBuf++;
+                            }
                         }
                     }
-                    return count;
-
                 }
+
+                //Convert from multi-track to interleaved data
+                int bufferIndex = offset;
+                for (int i = 0; i < asioOutBuffers.BufferSize; i++)
+                {
+                    foreach (VstAudioBuffer vstBuffer in asioOutBuffers.Buffers)
+                    {
+                        //Int16 waveValue = (Int16)((vstBuffer[i] + 1) * 128);
+                        byte[] bytes = BitConverter.GetBytes(vstBuffer[i]);
+                        outputBuffer[bufferIndex] = bytes[0];
+                        outputBuffer[bufferIndex + 1] = bytes[1];
+                        outputBuffer[bufferIndex + 2] = bytes[2];
+                        outputBuffer[bufferIndex + 3] = bytes[3];
+                        bufferIndex += 4;
+                    }
+                }
+                return count;
+
 
                 return 0;
             }
         }
 
+
+        public void ProcessMidi()
+        {
+            myWave.PIAM.ProcessAllPluginMidi();
+        }
 
         public MonoAsio()
         {
@@ -151,12 +184,11 @@ namespace MonoMusicMaker
 
 #endif
         VstPluginContext pluginCOntext;
-        public void SetPluginCOntext(VstPluginContext pi )
+        public void SetPluginContext(PluginAudioManager piam )
         {
             if (myWave != null)
             {
-                myWave.VstContext = pi;
-                myWave.VstContext.PluginCommandStub.Commands.SetSampleRate(44100); //Drum machine was playing fast because this needed setting
+                myWave.PIAM = piam;
             }
         }
 

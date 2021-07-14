@@ -11,6 +11,7 @@ namespace PluginHost
         private List<VstPluginContext> _plugins = new List<VstPluginContext>();
 
         bool mActive;
+        MonoMusicMaker.MelodyEditorInterface mMei;
 
         public VstPluginContext GetMainPlugin()
         {
@@ -22,11 +23,11 @@ namespace PluginHost
             return null;
         }
         MonoMusicMaker.MonoAsio mMonoAsio;
-        public MainForm()
+        public MainForm(MonoMusicMaker.MelodyEditorInterface mei)
         {
+            mMei = mei;
             InitializeComponent();
             Text = "VST.NET 2 Dummy Host Sample";
-
         }
 
         private void FillPluginList()
@@ -130,10 +131,16 @@ namespace PluginHost
                 _plugins.Add(ctx);
 
                 FillPluginList();
-
+                
+ 
                 if (mMonoAsio != null && _plugins.Count>0)
                 {
-                    mMonoAsio.SetPluginCOntext(_plugins[0]);
+                    if (mMei != null)
+                    {
+                        mMei.mPluginManager.AddPlugin(ctx);
+                    }
+
+                    mMonoAsio.SetPluginContext(mMei.mPluginManager);
                 }
                 
             }
@@ -154,6 +161,8 @@ namespace PluginHost
             mMonoAsio = new MonoMusicMaker.MonoAsio();
             mMonoAsio.Init(this);
             mMonoAsio.Start();
+            mMonoAsio.SetPluginContext(mMei.mPluginManager);
+
         }
 
         private void ViewPluginBtn_Click(object sender, EventArgs e)
