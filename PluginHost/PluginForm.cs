@@ -211,6 +211,12 @@ namespace PluginHost
 
         private void EditorBtn_Click(object sender, EventArgs e)
         {
+            ShowPlugin();
+        }
+
+
+        public void ShowPlugin()
+        {
             EditorFrame dlg = new EditorFrame
             {
                 PluginCommandStub = PluginContext.PluginCommandStub

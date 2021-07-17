@@ -93,7 +93,10 @@ namespace MonoMusicMaker
                     {
                         VSTPlugin vstp  = PIAM.GetPluginContext(0);
 
-                        vstp.InitBuffer(count, BytesPerWaveSample);
+                        if(!vstp.AreBuffersInit())
+                        {
+                            vstp.InitBuffer(count, BytesPerWaveSample);
+                        }
 
                         //vstp.inputBuffers = new VstAudioBufferManager(
                         //     VstContext.PluginInfo.AudioInputCount,

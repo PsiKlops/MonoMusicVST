@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace PluginHost
 {
@@ -37,6 +38,19 @@ namespace PluginHost
             }
 
             return base.ShowDialog(owner);
+        }
+
+
+         public void ShowPlugin()
+        {
+            this.Text = PluginCommandStub.Commands.GetEffectName();
+
+            if (PluginCommandStub.Commands.EditorGetRect(out Rectangle wndRect))
+            {
+                this.Size = this.SizeFromClientSize(new Size(wndRect.Width, wndRect.Height));
+                PluginCommandStub.Commands.EditorOpen(this.Handle);
+            }
+            base.ShowDialog();
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)

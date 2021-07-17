@@ -138,6 +138,12 @@ namespace MonoMusicMaker
         {
             if (state.mCurrentTrackPlayArea != button.mGED.mValue)
             {
+                if(mShowTrackVSTEditor.mbOn)
+                {
+                    mShowTrackVSTEditor.mbOn = false;
+                    mMelEdInterf.VSTSwitch(mShowTrackVSTEditor.mbOn); //Turn off the VST editor for this track if we are swithcing away
+                }
+
                 state.StopAllNotes(); //TODO Blatt out a clear to stop notes being stuck on 
 
                 state.mSoloCurrent = false; //always turn off when we move away a track to another one
@@ -278,6 +284,7 @@ namespace MonoMusicMaker
         public const int FOURTEEN_TICK_BUTTON_XPOS = (int)(THIRTEEN_TICK_BUTTON_XPOS + TICK_BUTTON_SPACE);
         public const int FIFTEEN_TICK_BUTTON_XPOS = (int)(FOURTEEN_TICK_BUTTON_XPOS + TICK_BUTTON_SPACE);
         public const int SIXTEEN_TICK_BUTTON_XPOS = (int)(FIFTEEN_TICK_BUTTON_XPOS + TICK_BUTTON_SPACE);
+        public const int SEVENTEENTH_TICK_BUTTON_XPOS = (int)(SIXTEEN_TICK_BUTTON_XPOS + TICK_BUTTON_SPACE);
 
 
         public const int BAR_BUTTON_PAIR_Y_GAP = (int)(10f * SCALE_SCREEN);
@@ -336,6 +343,7 @@ namespace MonoMusicMaker
             //mTestGrid = new ButtonGrid(mInstrumentSelect.GetGridEntries());
         }
 
+        Button mShowTrackVSTEditor;
         Button mPlayAreaRecordMode;
         Button mClearAllPlayHeadOffset;
         Button mClearCurrentPlayHeadOffset;
@@ -597,7 +605,7 @@ namespace MonoMusicMaker
         
             mClearAllPlayHeadOffset = InitTickButton(FIFTEEN_TICK_BUTTON_XPOS, BOTTOM_BUTTON_YPOS, "CLR\nOFFSET", MelodyEditorInterface.UIButtonMask.UIBM_ClearPlayOffset, ResetAllPlayHeadOffset);
             mPlayAreaRecordMode = InitTickButton(SIXTEEN_TICK_BUTTON_XPOS, BOTTOM_BUTTON_YPOS, "REC\nPLAY", MelodyEditorInterface.UIButtonMask.UIBM_PlayAreaRecMode, PlayAreaRecModeSwitch);
-
+            mShowTrackVSTEditor = InitTickButton(SEVENTEENTH_TICK_BUTTON_XPOS, BOTTOM_BUTTON_YPOS, "VST", MelodyEditorInterface.UIButtonMask.UIBM_VST_Switch, VSTSwitch);
             /////////////////////////////////////////////
             /// BUTTONS IN SAME SPACE AS EDITOR BUTTONS
             ///             
@@ -696,11 +704,15 @@ namespace MonoMusicMaker
             mMidiTrackSelect.SetTrackSelectBar(mTrackSelectPbb);
             mMelEdInterf.mEditManager = mNewEditMgr;
 
+            mMelEdInterf.mMainForm = mMainForm;
+
             mLoopSaveTickBox.mbOn = mMelEdInterf.mState.mbSaveMIDIWithLoop; //make sure button is set to the default
 
+            mMelEdInterf.mPluginManager.SetState(mMelEdInterf.mState);
 
             //MIDI SYNTH IN 
-            mMidiSYnthIn = new MidiSynthIn(mKeyboardAndMidiCommonControl);
+            //mMidiSYnthIn = new MidiSynthIn(mKeyboardAndMidiCommonControl);
+            mMidiSYnthIn = new MidiSynthIn(mMelEdInterf.mPluginManager);
 
             ClearAll(mMelEdInterf.mState); // Make sure the volume is set to default on all tracks from the start!
 
@@ -742,6 +754,16 @@ namespace MonoMusicMaker
             if(!mMelEdInterf.PlayAreaRecModeSwitch(mPlayAreaRecordMode.mbOn))
             {
                 mPlayAreaRecordMode.mbOn = false;
+                return false;
+            }
+            return true;
+        }
+        public bool VSTSwitch(MelodyEditorInterface.MEIState state)
+        {
+            //mPlayAreaRecordMode.mbOn = !mPlayAreaRecordMode.mbOn;
+            if (!mMelEdInterf.VSTSwitch(mShowTrackVSTEditor.mbOn))
+            {
+                //mShowTrackVSTEditor.mbOn = false;
                 return false;
             }
             return true;

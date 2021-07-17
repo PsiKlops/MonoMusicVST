@@ -16,10 +16,26 @@ namespace MonoMusicMaker
         public VstAudioBufferManager outputBuffers;
         public VstAudioBufferManager inputBuffers;
 
+        public bool mbInitBufferAtCreate = true;
+        int numBuffersAInit = 2;
+        int BytesPerWaveSample = 4;
+
+        bool mbInitBUffers = false;
         public VSTPlugin(VstPluginContext pi)
         {
-            PluginContext = pi;
+             PluginContext = pi;
+        }
 
+        public bool AreBuffersInit()
+        {
+            if(mbInitBUffers)
+            {
+                return true;
+            }
+
+            mbInitBUffers = true;
+
+            return false;
         }
 
         public void InitBuffer(int count, int BytesPerWaveSample)

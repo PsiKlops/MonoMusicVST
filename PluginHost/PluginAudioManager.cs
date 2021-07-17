@@ -131,8 +131,8 @@ namespace MonoMusicMaker
 
         public void AddPlugin(VstPluginContext pi)
         {
+            pi.PluginCommandStub.Commands.SetSampleRate(44100); //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! put before new VSTPlugin
             VSTPlugin vp = new VSTPlugin(pi);
-            pi.PluginCommandStub.Commands.SetSampleRate(44100); //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             mPlugins.Add(vp);
         }
 

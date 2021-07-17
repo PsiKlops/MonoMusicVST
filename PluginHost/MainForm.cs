@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace PluginHost
 {
@@ -145,6 +146,48 @@ namespace PluginHost
                 
             }
         }
+
+
+        //////////////////////////////////////////////////////////////
+        ///// PLUGIN EDITOR!
+        public VstPluginContext PluginContext { get; set; }
+        EditorFrame dlg = null;
+        public void ShowPlugin(EditorFrame dlg)
+        {
+            PluginContext.PluginCommandStub.Commands.MainsChanged(true);
+            //dlg.ShowDialog(this);
+            dlg.ShowPlugin();
+            PluginContext.PluginCommandStub.Commands.MainsChanged(false);
+        }
+
+        Thread mPluginEditorThread;
+        public void ThreadShowPlugin(EditorFrame dlg)
+        {
+ 
+            mPluginEditorThread = new Thread(()=>ShowPlugin(dlg));
+            mPluginEditorThread.Name = "Plugin Thread";
+            mPluginEditorThread.IsBackground = true;
+            mPluginEditorThread.Start();
+        }
+        public void AbortThreadShowPlugin()
+        {
+            if(dlg!=null)
+            {
+                dlg.Close();
+            }
+        }
+
+        public bool PluginThreadRunning()
+        {
+            if(mPluginEditorThread!=null)
+            {
+                return mPluginEditorThread.IsAlive;
+            }
+
+            return false;
+        }
+        ///// PLUGIN EDITOR!
+        //////////////////////////////////////////////////////////////
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {

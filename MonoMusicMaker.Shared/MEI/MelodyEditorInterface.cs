@@ -9,8 +9,9 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using NAudio.Midi;
 using Jacobi.Vst.Core;
-using Jacobi.Vst.Interop;
+using Jacobi.Vst.Host.Interop;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace MonoMusicMaker //.MEI
 {
@@ -101,6 +102,7 @@ namespace MonoMusicMaker //.MEI
             UIBM_ClearPlayOffset = 1 << 22,
             UIBM_PlayAreaRecMode = 1 << 23,
             UIBM_Rewind = 1 << 24,
+            UIBM_VST_Switch = 1 << 25,
 
             UIBM_ALL = 
                 UIBM_Play | UIBM_Inst | UIBM_Start | UIBM_Save |
@@ -108,7 +110,7 @@ namespace MonoMusicMaker //.MEI
                 UIBM_Mode | UIBM_BPM | UIBM_Popup | UIBM_Tick | 
                 UIBM_PanVol | UIBM_PitchDet |UIBM_EditMode | 
                 UIBM_EditControl | UIBM_DrumMachine | UIBM_ToggleButtons |
-                UIBM_ToggleDrums | UIBM_NukeAll | UIBM_ToggNoteSlideVelocity | UIBM_ToggParam | UIBM_ClearPlayOffset | UIBM_PlayAreaRecMode | UIBM_Rewind,
+                UIBM_ToggleDrums | UIBM_NukeAll | UIBM_ToggNoteSlideVelocity | UIBM_ToggParam | UIBM_ClearPlayOffset | UIBM_PlayAreaRecMode | UIBM_Rewind | UIBM_VST_Switch,
         }
 
         public bool mbNotEmpty = false;
@@ -1003,6 +1005,68 @@ namespace MonoMusicMaker //.MEI
             }
 
             return true;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////
+        //PLUGIN VIEWER
+        public PluginHost.MainForm mMainForm= null;
+        PluginHost.PluginForm mPluginForm = null;
+        PluginHost.EditorFrame mEddlg = null;
+        public bool VSTSwitch(bool bIsOn)
+        {
+            if (mMainForm.PluginThreadRunning())
+            {
+                if (!bIsOn)
+                {
+                    if(mEddlg!=null)
+                    {
+                        try
+                        {
+                            mEddlg.BeginInvoke(new Action(() => mEddlg.Close())); // use this BeginInvoke to prevent thread exception not calling form accesses on the same thread
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                    return true; //TODO ?
+                }
+                else
+                {
+                    return true; //On already - somehow
+                }
+            }
+
+            if(bIsOn)
+            {
+                int currentChannel = mCurrentPlayArea != null ? mCurrentPlayArea.mChannel - 1 : -1;
+
+                if (currentChannel >= 0 && mPluginManager.GetNumPluginContext() > currentChannel)
+                {
+
+                    VSTPlugin vp = mPluginManager.GetPluginContext(currentChannel);
+                    VstPluginContext PluginContext = vp.PluginContext;
+
+                    //PluginHost.PluginForm dlg = new PluginHost.PluginForm();
+
+                    PluginHost.MainForm dlg = mMainForm;
+
+                    dlg = mMainForm;
+                    dlg.PluginContext = PluginContext;
+
+                    //dlg.ShowDialog();
+                    mEddlg = new PluginHost.EditorFrame
+                    {
+                        PluginCommandStub = PluginContext.PluginCommandStub
+                    };
+
+                    dlg.ThreadShowPlugin(mEddlg);
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void ResetCurrentPlayHeadOffset()
